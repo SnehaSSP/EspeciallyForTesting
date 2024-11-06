@@ -1,4 +1,4 @@
-name: Run Selenium Test with Local ChromeDriver
+name: Run Selenium Test with x64 Intel MacOS Big Sur Runner
 
 on:
   push:
@@ -10,7 +10,9 @@ on:
 
 jobs:
   selenium-test:
-    runs-on: macos-latest
+    # Specify the macOS runner version matching your Big Sur environment
+    runs-on: macos-11  # This specifies using macOS 11 (Big Sur), which is Intel-based x64
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -18,10 +20,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x' # Replace with your preferred Python version
+          python-version: '3.x'  # Replace with the preferred Python version
 
       - name: Use Local ChromeDriver
         run: |
+          mkdir -p $HOME/.chromedriver
           cp /Users/somud/Downloads/chromedriver-mac-x64\ 2/chromedriver $HOME/.chromedriver/chromedriver
           chmod +x $HOME/.chromedriver/chromedriver
           sudo mv $HOME/.chromedriver/chromedriver /usr/local/bin/chromedriver
@@ -32,4 +35,4 @@ jobs:
           pip install selenium
 
       - name: Run Selenium Test
-        run: python file.py # Replace with your test script filename
+        run: python your_test_file.py  # Replace with your test script filename
