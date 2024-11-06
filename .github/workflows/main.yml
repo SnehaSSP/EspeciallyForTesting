@@ -1,4 +1,4 @@
-name: Run Selenium Test with ChromeDriver
+name: Run Selenium Test with Local ChromeDriver
 
 on:
   push:
@@ -18,18 +18,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x' # Replace with your desired Python version
+          python-version: '3.x' # Replace with your preferred Python version
+
+      - name: Use Local ChromeDriver
+        run: |
+          cp /Users/somud/Downloads/chromedriver-mac-x64\ 2/chromedriver $HOME/.chromedriver/chromedriver
+          chmod +x $HOME/.chromedriver/chromedriver
+          sudo mv $HOME/.chromedriver/chromedriver /usr/local/bin/chromedriver
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install selenium
 
-      - name: Download ChromeDriver
-        run: |
-          curl -O https://chromedriver.storage.googleapis.com/130.0.6723.69/chromedriver_mac64.zip
-          unzip chromedriver_mac64.zip -d $HOME/.chromedriver
-          sudo mv $HOME/.chromedriver/chromedriver /usr/local/bin/chromedriver
-
       - name: Run Selenium Test
-        run: python your_test_file.py # Replace with the name of your test scr
+        run: python file.py # Replace with your test script filename
